@@ -1,0 +1,102 @@
+package com.homedepot.smoke_tests;
+
+import com.homedepot.base.Base;
+import com.homedepot.common.CustomWait;
+import com.homedepot.pageObjects.sections.HeaderSection;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
+import java.util.List;
+
+public class Header_Test extends Base {
+
+    private HeaderSection headerSection = new HeaderSection();
+    private CustomWait wait = new CustomWait();
+
+    @Test
+    public void nav_header_test() {
+
+//            WebElement headerTab = library.find("header Tabs", By.cssSelector(".ShoppingLinks>li"));
+//            List<WebElement> tabs = headerTab.findElements(By.tagName("li"));
+
+        List<WebElement> header_tabs = library.findAll("Header Tabs", By.cssSelector(".ShoppingLinks>li"));
+        boolean[] areVisible = new boolean[header_tabs.size() - 1];
+
+        Actions actions = new Actions(driver);
+
+        for (int i = 0; i < header_tabs.size(); i++) {
+            actions.moveToElement(header_tabs.get(i)).build().perform();
+            switch (i) {
+                case 0:
+                    try {
+                        library.waitUntilVisible(By.cssSelector("#allDepartmentsFlyout"));
+                        areVisible[i] = true;
+                    } catch (Exception e) {
+                        areVisible[i] = false;
+                    }
+                    break;
+                case 1:
+                    try {
+                        library.waitUntilVisible(By.cssSelector(".homeDecorFurnitureFlyout.homeDecorFurnitureFlyout__menu-wrapper.homeDecorFurnitureFlyout--open"));
+                        areVisible[i] = true;
+                    } catch (Exception e) {
+                        areVisible[i] = false;
+                    }
+                    break;
+                case 2:
+                    try {
+                        library.waitUntilVisible(By.xpath("(//section[@class='grid diyFlyout__level1'])[1]"));
+                        areVisible[i] = true;
+                    } catch (Exception e) {
+                        areVisible[i] = false;
+                    }
+                    break;
+                case 3:
+                    try {
+                        library.waitUntilVisible(By.xpath("(//section[@class='grid diyFlyout__level1'])[2]"));
+                        areVisible[i] = true;
+                    } catch (Exception e) {
+                        areVisible[i] = false;
+                    }
+                    break;
+                case 4:
+                    try {
+                        library.waitUntilVisible(By.cssSelector(".grid.specialOffersFlyout__level1"));
+                        areVisible[i] = true;
+                    } catch (Exception e) {
+                        areVisible[i] = false;
+                    }
+                    break;
+            }
+        }
+        for (boolean b : areVisible) {
+            System.out.println(b);
+            Assert.assertTrue(b);
+        }
+    }
+    // Test all header tasks links
+
+    @Test
+    public void taskLinks_test(){
+
+        List<WebElement> headerTasksLinks = headerSection.getHeaderTasksLinks();
+        Assert.assertEquals(8, headerTasksLinks.size() );
+        System.out.println(headerTasksLinks.size());
+        for (WebElement temp : headerTasksLinks){
+        String href = temp.getAttribute("href");
+            System.out.println(href);
+           Assert.assertNotNull(href);
+       }
+       //or header_task_links.forEach(i -> Assert.assertNotNull(i.getAttribute("href")));
+    }
+
+
+
+
+
+}
+
+
