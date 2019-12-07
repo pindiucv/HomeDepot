@@ -53,6 +53,7 @@ public class ShoppingCart_Test extends Base {
         shoppingCartPage.clickSaveToFavourites();
         List<WebElement> saved_favourite_items = library.findAll("Saved Favourite items", By.cssSelector(".grid>list-item-details"));
         Assert.assertTrue(saved_favourite_items.size() > 0);
+
     }
 }
 
