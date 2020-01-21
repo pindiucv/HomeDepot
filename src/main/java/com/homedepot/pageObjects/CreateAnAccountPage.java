@@ -1,8 +1,12 @@
 package com.homedepot.pageObjects;
 
+import com.homedepot.base.Base;
 import com.homedepot.common.Library;
 import net.bytebuddy.utility.RandomString;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.Random;
 
@@ -10,27 +14,38 @@ public class CreateAnAccountPage {
 
 
     private Library library;
+    @FindBy(css = "[name='email']")
+    WebElement emailTextBox;
+    @FindBy(css = "[name='password']")
+    WebElement passwordTextBox;
+    @FindBy(css = "[name='zipcode']")
+    WebElement zipCodeTextBox;
+    @FindBy(css = "[name='phone']")
+    WebElement phoneTextBox;
+    @FindBy(css = "[data-automation-id='registrationCreateAnAccountButton']>span")
+    WebElement createAccountButton;
+    @FindBy(css = "[data-automation-id='subscriptionsSkipForNowContinueShoppingButton']>span")
+    WebElement skipAndContinueShoppingButton;
+
+
 
     public CreateAnAccountPage() {
         library = new Library();
+        PageFactory.initElements(Base.getDriver(), this);
     }
 
     public void fillOut() {
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(1000);
-        library.enter("Email text_box", "vero"+ randomInt + "@gmail.com", By.cssSelector("[name='email']"));
-        //driver.findElement(By.id("id of the element").SendKeys("Automation_" + Number.Next(1, 1000).ToString() + "_" + driver.RandomString(4) + "@gmail.com"));
-
-        library.enter("Password text_box", "Cyram123", By.cssSelector("[name='password']"));
-        library.enter("ZipCode text_box", "60634", By.cssSelector("[name='zipcode']"));
+        emailTextBox.sendKeys("vero"+ randomInt + "@gmail.com");
+        passwordTextBox.sendKeys("Cyram123");
+        zipCodeTextBox.sendKeys("60634");
 
         int last4Num= randomGenerator.nextInt(10000);
         String cellNum = ("123456" + last4Num);
-        library.enter("Phone text_box", cellNum, By.cssSelector("[name='phone']"));
-
-        library.click("Create Account button", By.cssSelector("[data-automation-id='registrationCreateAnAccountButton']>span"));
-        library.click("Skip for now & Continue Shopping button", By.cssSelector("[data-automation-id='subscriptionsSkipForNowContinueShoppingButton']>span"));
-
+        phoneTextBox.sendKeys(cellNum);
+        library.click(createAccountButton);
+        skipAndContinueShoppingButton.click();
     }
 
 }

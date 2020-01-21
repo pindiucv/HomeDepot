@@ -1,9 +1,11 @@
 package com.homedepot.pageObjects;
 
+import com.homedepot.base.Base;
 import com.homedepot.common.Library;
 import com.homedepot.pageObjects.sections.HeaderSection;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
@@ -13,19 +15,22 @@ public class HomeDecorAndFurniturePage {
     private HeaderSection headerSection = new HeaderSection();
     private ProductListPage productListPage = new ProductListPage();
 
+    @FindBy(xpath = "(//div[@class='homeDecorFurnitureFlyout__bay  '])[6]/div/a") List<WebElement> getFragranceAndCandlesLinks;
+    @FindBy(xpath = "(//div[@class='homeDecorFurnitureFlyout__bay  '])[1]/div/a")  List<WebElement> getWallDecorLinks;
+
+
     public HomeDecorAndFurniturePage() {
         library = new Library();
+        PageFactory.initElements(Base.getDriver(), this);
     }
 
 
     public List<WebElement> getFragranceAndCandlesLinks() {
-        List<WebElement> all = library.findAll("Fragrance And Candles Links", By.xpath("(//div[@class='homeDecorFurnitureFlyout__bay  '])[6]/div/a"));
-        return all;
+        return getFragranceAndCandlesLinks;
 
     }
     public List<WebElement> getWallDecorLinks() {
-        List<WebElement> all = library.findAll("Fragrance And Candles Links", By.xpath("(//div[@class='homeDecorFurnitureFlyout__bay  '])[1]/div/a"));
-        return all;
+        return getWallDecorLinks;
 
     }
     public void selectItem_HomeDecorAndFurniture(int optionIndex) {
@@ -33,8 +38,9 @@ public class HomeDecorAndFurniturePage {
         library.hoverOver("Home Decor & Furniture option", headerTabs.get(1));
         WebElement item = getWallDecorLinks().get(optionIndex);
         item.click();
-        productListPage.hoverOverAnItemAndAddToCart(0);
-        library.switchToIframe(By.cssSelector(".thd-overlay__content.col__12-12.loading iframe"));
     }
-
+   public void addItemToCart(int optionIndex){
+       productListPage.hoverOverAnItem(optionIndex);
+       productListPage.addToCart();
+   }
 }

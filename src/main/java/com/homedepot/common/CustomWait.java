@@ -34,15 +34,16 @@ public class CustomWait {
         }
     }
 
-    public void waitUntilClickable(Object object) {
+    public WebElement waitUntilClickable(Object object) {
         if (object instanceof By) {
             WebDriverWait wait = new WebDriverWait(Library.driver, 7);
-            wait.until(ExpectedConditions.elementToBeClickable((By) object));
+           return wait.until(ExpectedConditions.elementToBeClickable((By) object));
         }
         if (object instanceof WebElement) {
             WebDriverWait wait = new WebDriverWait(Library.driver, 7);
-            wait.until(ExpectedConditions.elementToBeClickable((WebElement) object));
+          return   wait.until(ExpectedConditions.elementToBeClickable((WebElement) object));
         }
+        return null;
     }
 
     public boolean isClickable(Object object) {

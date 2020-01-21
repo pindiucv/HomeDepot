@@ -1,13 +1,14 @@
 package com.homedepot.base;
 
 import com.homedepot.common.Library;
-import org.junit.After;
-import org.junit.Before;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import org.openqa.selenium.WebDriver;
+
 
 public class Base {
     public Library library;
-    public WebDriver driver;
+    private static WebDriver driver;
 
     public Base() {
         library = new Library();
@@ -22,6 +23,10 @@ public class Base {
     public void tearDown() {
         library.waitFor(2);
         driver.quit();
+    }
+
+    public static WebDriver getDriver(){
+        return driver;
     }
 
 

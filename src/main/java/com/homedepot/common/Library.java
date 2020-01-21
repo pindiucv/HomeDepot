@@ -18,14 +18,13 @@ import java.util.concurrent.TimeUnit;
 public class Library {
 
     public static WebDriver driver;
-    public CustomWait wait = new CustomWait();;
+    public CustomWait wait = new CustomWait();
+    ;
 
     private String config_filePath = "C:\\Users\\Dell R2\\IdeaProjects\\Cyram_automation\\homedepot\\src\\main\\resources\\properties";
 
 
     public WebDriver openBrowser() {
-        String browser = "chrome";
-        String browser2 = "firefox";
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dell R2\\IdeaProjects\\Cyram_automation\\homedepot\\src\\main\\resources\\drivers\\chromedriver.exe");
 
         if (readProperties("browser").equalsIgnoreCase("chrome")) {
@@ -50,6 +49,15 @@ public class Library {
             System.err.println("Locator is not implemented");
     }
 
+    public void enter(String value, By by) {
+        if (by instanceof By.ByXPath || by instanceof By.ByCssSelector || by instanceof By.ById) {
+            WebElement element = wait.waitUntilPresent(by);
+            element.clear();
+            element.sendKeys(value);
+        } else
+            System.err.println("Locator is not implemented");
+    }
+
     public void click(String elementName, By by) {
         if (by instanceof By.ByXPath || by instanceof By.ByCssSelector || by instanceof By.ById)
             wait.waitUntilClickable(by).click();
@@ -57,7 +65,22 @@ public class Library {
             System.err.println("Locator is not implemented");
     }
 
+    public void click(By by) {
+        if (by instanceof By.ByXPath || by instanceof By.ByCssSelector || by instanceof By.ById)
+            wait.waitUntilClickable(by).click();
+        else
+            System.err.println("Locator is not implemented");
+    }
+
+    public void click( WebElement element) {
+        wait.waitUntilClickable(element).click();
+    }
+
     public WebElement find(String elementName, By by) {
+        return wait.waitUntilPresent(by);
+    }
+
+    public WebElement find(By by) {
         return wait.waitUntilPresent(by);
     }
 
@@ -65,7 +88,6 @@ public class Library {
         List<WebElement> webElements = wait.waitUntilAllPresent(by);
         return webElements;
     }
-
 
 
     public void selectDropdownByValue(By by, String value) {
@@ -118,6 +140,10 @@ public class Library {
     public void switchToIframe(By by) {
         WebDriverWait wait = new WebDriverWait(driver, 7);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(by));
+    }
+    public void switchToIframe(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, 7);
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(element));
     }
 
     public void switchToDefaultContent() {

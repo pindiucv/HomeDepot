@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "SmokeTestSuite">
+    <test name = "SmokeTestSuite1">
+
+        <groups>
+            <run>
+                <include name = "smokeTest" />
+            </run>
+        </groups>
+
+        <classes>
+            <class name = "com.homedepot.smoke_tests.Login_Test" />
+            <class name = "com.homedepot.smoke_tests.ShoppingCart_Test" />
+        </classes>
+
+    </test>
+</suite>

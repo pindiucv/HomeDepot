@@ -1,39 +1,55 @@
 package com.homedepot.pageObjects.sections;
 
+import com.homedepot.base.Base;
 import com.homedepot.common.Library;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class HeaderSection {
 
     private Library library;
+    @FindBy(css = "a>#headerMyAccountTitle>span")
+   public WebElement loginHeader;
+    @FindBy(css = ".headerMyAccountTitle.MyAccount__status.hide.show--sm")
+    WebElement myAccountButton;
+    @FindBy(css = "[href='//www.homedepot.com/auth/view/signin?redirect=/']")
+    WebElement signInButton;
+    @FindBy(css = "[class='SearchBox__buttonIcon']")
+    WebElement searchButton;
+    @FindBy(css = "[class='SearchBox__input']")
+    WebElement searchHeaderTextBox;
+    @FindBy(css = "#TasklinkList>li>a")
+    List<WebElement> headerTaskLinks;
+    @FindBy(css = ".ShoppingLinks>li")
+    List<WebElement> headerTabs;
+
 
     public HeaderSection() {
         library = new Library();
+        PageFactory.initElements(Base.getDriver(), this);
     }
 
 
     public void goToSignInPage() {
-        library.click("My Account_button", By.cssSelector(".headerMyAccountTitle.MyAccount__status.hide.show--sm"));
-        library.click("Sign In_button", By.cssSelector("[href='//www.homedepot.com/auth/view/signin?redirect=/']"));
+        myAccountButton.click();
+        library.click(signInButton);
     }
 
-
-    public List<WebElement> getHeaderTasksLinks(){
-        List<WebElement> header_task_links = library.findAll("Header task links", By.cssSelector("#TasklinkList>li>a"));
-        return header_task_links;
+    public List<WebElement> getHeaderTasksLinks() {
+        return headerTaskLinks;
     }
 
-    public void searchForItem(String itemName){
-        library.enter("Search Header TextBox", itemName, By.cssSelector("[class='SearchBox__input']"));
-        library.click("Search Button", By.cssSelector("[class='SearchBox__buttonIcon']"));
+    public void searchForItem(String itemName) {
+        searchHeaderTextBox.sendKeys(itemName);
+        searchButton.click();
     }
 
-    public List<WebElement> getHeaderTabs(){
-        List<WebElement> header_tabs = library.findAll("Header Tabs", By.cssSelector(".ShoppingLinks>li"));
-        return header_tabs;
+    public List<WebElement> getHeaderTabs() {
+        return headerTabs;
     }
 
 }
