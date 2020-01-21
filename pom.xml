@@ -112,6 +112,7 @@
                     <argLine>-Xmx512m</argLine>
                 </configuration>
                 <executions>
+
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
