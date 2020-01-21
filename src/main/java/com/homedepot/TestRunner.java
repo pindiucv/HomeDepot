@@ -6,9 +6,14 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features"
-        , tags= "@invalid_login"
-        , dryRun = true
+@CucumberOptions(
+        plugin = {"pretty", "html:target/cucumber"
+        , "com.cucumber.listener.ExtentCucumberFormatter:target/cucumber-reports/report.html"}
+        , monochrome = true
+        , features = "src/main/resources/features"
+        , glue = {"com.homedepot"}
+        , tags= " @Login"
+        , dryRun = false
         )
 
 

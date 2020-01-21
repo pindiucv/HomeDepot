@@ -2,8 +2,6 @@ package com.homedepot.pageObjects;
 
 import com.homedepot.base.Base;
 import com.homedepot.common.Library;
-import net.bytebuddy.utility.RandomString;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;

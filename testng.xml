@@ -11,8 +11,7 @@
         </groups>
 
         <classes>
-            <class name = "com.homedepot.smoke_tests.Login_Test" />
-            <class name = "com.homedepot.smoke_tests.ShoppingCart_Test" />
+
         </classes>
 
     </test>
